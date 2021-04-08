@@ -9,7 +9,6 @@ verticalPipeInsideDiameter_0_50pvc = 21.6;
 
 // Parameters
 jointLegLength = 50;
-shaftPipeInsideDiameter = 42.4;
 jointWallThickness = 3;
 jointPinningHoleDiameter = 7;
 
