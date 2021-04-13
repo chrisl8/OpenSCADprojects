@@ -27,8 +27,9 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
             union() color(JointColor)
                 {
                     for (leg = legs) {
+                        thisJointLegLength = len(leg) > 4 && leg[4] != false ? leg[4] : jointLegLength;
                         rotate(leg[0]) cylinder(
-                        h = jointLegLength,
+                        h = thisJointLegLength,
                         r = (leg[1] + jointWallThickness * 2) / 2);
                         // Add flat bottom
                         if (leg[2]) {
@@ -36,13 +37,13 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                                 translate([
                                         (leg[1] / 2) + (jointWallThickness / 2),
                                     0,
-                                        jointLegLength / 2
+                                        thisJointLegLength / 2
                                     ])
                                     cube([
                                         jointWallThickness,
                                         // The 0.4 is a guess at width. A parameter would probably be better.
                                             leg[1] * 0.5,
-                                        jointLegLength
+                                        thisJointLegLength
                                         ],
                                     center = true);
                             // Add a cylinder at the end of the leg to close any gap between leg flats
@@ -70,9 +71,10 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
             union()
                 {
                     for (leg = legs) {
+                        thisJointLegLength = len(leg) > 4 && leg[4] != false ? leg[4] : jointLegLength;
                         // The -0.01 ensures that the end of the tube is clear.
                         rotate(leg[0]) translate([0, 0, - 0.01]) cylinder(
-                        h = jointLegLength + 0.02, r = leg[1] / 2);
+                        h = thisJointLegLength + 0.02, r = leg[1] / 2);
 
                         // IF a flat bottom was added, also add a "cut" to ensure nothing
                         // else in the part extends below this flat bottom.
@@ -81,13 +83,13 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                                 translate([
                                         (leg[1] / 2) + (jointWallThickness * 2),
                                     0,
-                                        jointLegLength / 2
+                                        thisJointLegLength / 2
                                     ])
                                     cube([
                                         // The 0.00001 just ensures it doesn't clip the flat on the legs at all.
                                                 jointWallThickness * 2 - 0.00001,
                                             leg[1] * 2,
-                                            jointLegLength * 2
+                                            thisJointLegLength * 2
                                         ],
                                     center = true);
                         }
@@ -96,8 +98,8 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                             echo("Drilling Pinhole");
                             // The -0.01 ensures that the end of the tube is clear.
                             rotate([leg[0][0] + 90, leg[0][1], leg[0][2]]) translate([0,
-                                    jointLegLength - 10, 0]) rotate([0, leg[3] == true ? 0 : leg[3], 0]) cylinder(
-                            h = jointLegLength + 0.02, d = jointPinningHoleDiameter, center = true);
+                                    thisJointLegLength - 10, 0]) rotate([0, leg[3] == true ? 0 : leg[3], 0]) cylinder(
+                            h = thisJointLegLength + 0.02, d = jointPinningHoleDiameter, center = true);
                         }
                     }
 
