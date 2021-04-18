@@ -98,7 +98,7 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                             echo("Drilling Pinhole");
                             // The -0.01 ensures that the end of the tube is clear.
                             rotate([leg[0][0] + 90, leg[0][1], leg[0][2]]) translate([0,
-                                    thisJointLegLength - 10, 0]) rotate([0, leg[3] == true ? 0 : leg[3], 0]) cylinder(
+                                    thisJointLegLength - jointPinHoleOffset, 0]) rotate([0, leg[3] == true ? 0 : leg[3], 0]) cylinder(
                             h = thisJointLegLength + 0.02, d = jointPinningHoleDiameter, center = true);
                         }
                     }

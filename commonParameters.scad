@@ -12,6 +12,7 @@ verticalPipeInsideDiameter_0_50pvc = 21.7; // Tested.
 jointLegLength = 50;
 jointWallThickness = 3;
 jointPinningHoleDiameter = 7;
+jointPinHoleOffset = 10;
 
 // Colors
 JointColor = "CornflowerBlue";
