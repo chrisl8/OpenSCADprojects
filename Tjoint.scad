@@ -9,12 +9,12 @@ include <jointModule.scad>;
 module BoxCornerJoint()
 {
     jointLegs = [
-            [[0, 90, 0], horizontalPipeInsideDiameter, true, 90],
-            [[90, 90, 0], horizontalPipeInsideDiameter, true, 90],
-            [[90, 90, 180], horizontalPipeInsideDiameter, true, 90],
+            [[0, 90, 0], horizontalPipeInsideDiameter, true, 90, false, true],
+            [[90, 90, 0], horizontalPipeInsideDiameter, true, 90, false, true],
+            [[90, 90, 180], horizontalPipeInsideDiameter, true, 90, false, true],
         ];
 
-    rotate([0, 0, 180]) joint(jointLegs, horizontalPipeInsideDiameter, true);
+    rotate([0, 0, 0]) joint(jointLegs, horizontalPipeInsideDiameter, true);
 }
 
 BoxCornerJoint();
