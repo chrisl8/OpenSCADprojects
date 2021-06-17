@@ -1,13 +1,14 @@
 // Modules
 // legs is a vector of legs,
-// each leg is a vector containing:
-// vector of the joint rotation
+//      each leg is a vector containing:
+//      vector of the joint rotation
 // horizontalPipeInsideDiameter
 // Optional Boolean requesting addition of a flat bottom
 // Optional Boolean or number requesting a hole drilled near the end,
 //      If it is a number, this is the angle at which it should be drilled.
 //      For historical reasons, 0 and true are equivalent
 //      Use false when you need to skip this but still add another vector entry
+// Option integer indicating an override for the length of this leg
 // i.e. [[x, y, z], horizontalPipeInsideDiameter]
 
 /*
@@ -15,7 +16,7 @@ i.e.
 jointLegs = [
         [[0, 90, 0], horizontalPipeInsideDiameter, true, true],
         [[90, 90, 0], horizontalPipeInsideDiameter, true, 45],
-        [[90, 90, 180], horizontalPipeInsideDiameter, true, 90],
+        [[90, 90, 180], horizontalPipeInsideDiameter, true, 90, 500],
     ];
 
  */
@@ -31,6 +32,7 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                         rotate(leg[0]) cylinder(
                         h = thisJointLegLength,
                         r = (leg[1] + jointWallThickness * 2) / 2);
+
                         // Add flat bottom
                         if (leg[2]) {
                             rotate(leg[0])
@@ -107,9 +109,13 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                             // Make a hole near the end of the leg for pinning
                             echo("Drilling Pinhole");
                             // The -0.01 ensures that the end of the tube is clear.
-                            rotate([leg[0][0] + 90, leg[0][1], leg[0][2]]) translate([0,
-                                    thisJointLegLength - jointPinHoleOffset, 0]) rotate([0, leg[3] == true ? 0 : leg[3], 0]) cylinder(
-                            h = thisJointLegLength + 0.02, d = jointPinningHoleDiameter, center = true);
+                            rotate([leg[0][0] + 90, leg[0][1], leg[0][2]])
+                                translate([0,
+                                        thisJointLegLength - jointPinHoleOffset, 0])
+                                    rotate([0, leg[3] == true ? 0 : leg[3],
+                                        0])
+                                        cylinder(
+                                        h = thisJointLegLength + 0.02, d = jointPinningHoleDiameter, center = true);
                         }
                     }
 
