@@ -58,6 +58,16 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                                         ])
                                         cylinder(h = jointWallThickness, r = (leg[1] * 0.5) / 2);
                         }
+
+                        // Triangles for improving stength
+                        if (len(leg) > 5 && leg[5] != false) {
+                            thisTriangleSize = leg[5] == true ? 50 : leg[5];
+                            rotate([0, 0, leg[0][0] - 90])
+                                linear_extrude(height = 8, center = true, convexity = 10, twist = 0)
+                                    polygon(points = [[0, thisTriangleSize], [0, 0], [thisTriangleSize, 0]],
+                                    paths =
+                                        [[0, 1, 2]]);
+                        }
                     }
 
                     if (closeUpWithSphere)
