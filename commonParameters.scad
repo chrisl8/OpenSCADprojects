@@ -14,6 +14,43 @@ jointWallThickness = 3.5;
 jointPinningHoleDiameter = 7;
 jointPinHoleOffset = 10;
 
+// Walker Foot Parameters
+inchesToMmConversionFactor = 25.4;
+
+// Current idea is 11 x 21 inches.
+walkerFootHeight = 11 * inchesToMmConversionFactor;
+walkerFootLength = 21 * inchesToMmConversionFactor;
+// Back of Foot is 1 inches longer to cause foot to hang as desired
+walkerFootCenterOffset = 1 * inchesToMmConversionFactor;
+walkerFootFrontLength = (walkerFootLength / 2) - (walkerFootCenterOffset / 2);
+walkerFootBackLength = (walkerFootLength / 2) + (walkerFootCenterOffset / 2);
+// Angles
+// This site is great for visualizing what you want: https://www.blocklayer.com/trig/scaleneeng.aspx
+// Use this site to check your math and results: https://www.calculator.net/right-triangle-calculator.html
+echo("=======================================================");
+echo("Walker Foot Parameters");
+echo("walkerFootLength", walkerFootLength, walkerFootFrontLength + walkerFootBackLength);
+echo("=======================================================");
+echo("Front:");
+echo("walkerFootHeight (a)", walkerFootHeight);
+echo("walkerFootFrontLength (b)", walkerFootFrontLength);
+walkerFootFrontTriangleTopLength = sqrt(pow(walkerFootHeight, 2) + pow(walkerFootFrontLength, 2));
+echo("walkerFootFrontTriangleTopLength (c)", walkerFootFrontTriangleTopLength);
+walkerFootFrontJointAngle = asin(walkerFootHeight / walkerFootFrontTriangleTopLength);
+echo("walkerFootFrontJointAngle (α):", walkerFootFrontJointAngle);
+walkerAnkleFrontAngle = asin(walkerFootFrontLength / walkerFootFrontTriangleTopLength);
+echo("walkerAnkleFrontAngle (β)", walkerAnkleFrontAngle);
+echo("-------------------------------------------------------");
+echo("Back");
+echo("walkerFootBackLength (b)", walkerFootBackLength);
+walkerFootBackTriangleTopLength = sqrt(pow(walkerFootHeight, 2) + pow(walkerFootBackLength, 2));
+echo("walkerFootBackTriangleTopLength (c)", walkerFootBackTriangleTopLength);
+walkerFootBackJointAngle = asin(walkerFootHeight / walkerFootBackTriangleTopLength);
+echo("walkerFootBackJointAngle (α):", walkerFootBackJointAngle);
+walkerAnkleBackAngle = asin(walkerFootBackLength / walkerFootBackTriangleTopLength);
+echo("walkerAnkleBackAngle (β)", walkerAnkleBackAngle);
+echo("=======================================================");
+
 // Colors
 JointColor = "CornflowerBlue";
 
