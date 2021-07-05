@@ -29,9 +29,10 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                 {
                     for (leg = legs) {
                         thisJointLegLength = len(leg) > 4 && leg[4] != false ? leg[4] : jointLegLength;
-                        rotate(leg[0]) cylinder(
-                        h = thisJointLegLength,
-                        r = (leg[1] + jointWallThickness * 2) / 2);
+                        rotate(leg[0])
+                            cylinder(
+                            h = thisJointLegLength,
+                            r = (leg[1] + jointWallThickness * 2) / 2);
 
                         // Add flat bottom
                         if (leg[2]) {
@@ -63,10 +64,16 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
 
                         // Triangles for improving stength
                         if (len(leg) > 5 && leg[5] != false) {
-                            thisTriangleSize = leg[5] == true ? 50 : leg[5];
-                            rotate([0, 0, leg[0][0] - 90])
+
+                            // TODO: Document this
+                            thisTriangleSize = leg[5][0] ? leg[5][0] : 10;
+                            thisTriangleRotate = leg[5][1] ? leg[5][1] : leg[0][2] * 1.5;
+                            thisTriangleWidth = leg[5][2] ? leg[5][2] : 40;
+
+                            rotate([90 - leg[0][1], 0, thisTriangleRotate])
                                 linear_extrude(height = 8, center = true, convexity = 10, twist = 0)
-                                    polygon(points = [[0, thisTriangleSize], [0, 0], [thisTriangleSize, 0]],
+                                    polygon(points = [[thisTriangleSize, thisTriangleWidth], [0, 0], [
+                                        thisTriangleWidth, thisTriangleSize]],
                                     paths =
                                         [[0, 1, 2]]);
                         }
@@ -107,7 +114,6 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                         }
                         if (len(leg) > 3 && leg[3] != false) {
                             // Make a hole near the end of the leg for pinning
-                            echo("Drilling Pinhole");
                             // The -0.01 ensures that the end of the tube is clear.
                             rotate([leg[0][0] + 90, leg[0][1], leg[0][2]])
                                 translate([0,
@@ -115,7 +121,8 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                                     rotate([0, leg[3] == true ? 0 : leg[3],
                                         0])
                                         cylinder(
-                                        h = thisJointLegLength + 0.02, d = jointPinningHoleDiameter, center = true);
+                                        h = leg[1] + jointWallThickness * 2 + 0.01, d = jointPinningHoleDiameter, center
+                                        = true);
                         }
                     }
 

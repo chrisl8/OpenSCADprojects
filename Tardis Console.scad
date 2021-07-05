@@ -1,3 +1,5 @@
+include <commonParameters.scad>;
+
 // ******************************************
 // To Export a part for printing:
 // If there is one command per part,
@@ -5,13 +7,6 @@
 // otherwise, there should be a non-loop
 // entry commented out that you can use.
 // ******************************************
-
-// Resoution
-// This is perfect for 3D Printing,
-// but you may want to comment it out while working to improve preview
-// performance
-//$fa = 1;
-//$fs = 0.4;
 
 // All measurements in millimeters
 
@@ -43,10 +38,6 @@ RenderPipes = false;
 tableRadius = tableDiameter / 2; // Does not affect printed parts.
 tableHeight = 250; // Does not affect printed parts.
 
-// Colors
-JointColor = "CornflowerBlue";
-PipeColor = "Pink";
-
 // Calculated Constants
 BaseRadius = tableRadius / 3;
 PipeInsertDistance = jointLegLength * .6;
@@ -63,7 +54,7 @@ for (i = [0:tableSideCount - 1]) {
 // !tableBaseJoint(0); // Also set RenderPipes to false
 
 // table base center
-translate([ 0, 0, -tableHeight ]) tableCenter(tableSideCount);
+translate([0, 0, - tableHeight]) tableCenter(tableSideCount);
 
 // Table base t_joints
 for (i = [0:tableSideCount - 1]) {
@@ -88,26 +79,38 @@ module tableBaseJoint(joint_location_in_degrees)
     translate_y = (BaseRadius) * sin(joint_location_in_degrees);
 
     jointLegs = [
-        [[ 0, 90, -(TableOutsideJointAngle / 2) ], jointInsideDiameter, true],
-        [[ 0, 90, +(TableOutsideJointAngle / 2) ], jointInsideDiameter, true],
-        [[ 0, 0, 0 ], tableLegInsideJointDiameter],
-        [[ 0, 90, 0 ], jointInsideDiameter, true],
-    ];
+            [[0, 90, - (TableOutsideJointAngle / 2)], jointInsideDiameter, true],
+            [[0, 90, + (TableOutsideJointAngle / 2)], jointInsideDiameter, true],
+            [[0, 0, 0], tableLegInsideJointDiameter],
+            [[0, 90, 0], jointInsideDiameter, true],
+        ];
 
-    translate([ translate_x, translate_y, -tableHeight ])
-        rotate([ 0, 0, 180 + joint_location_in_degrees ]) joint(jointLegs, tableLegInsideJointDiameter, true);
+    translate([translate_x, translate_y, - tableHeight])
+        rotate([0, 0, 180 + joint_location_in_degrees]) joint(jointLegs, tableLegInsideJointDiameter, true);
 
-    if(RenderPipes){
+    if (RenderPipes) {
         // TODO: Properly calculate pipe insert distance and length and echo them
-        color(PipeColor)translate([ translate_x, translate_y, -tableHeight + PipeInsertDistance ])cylinder(r=PipeSize, h= tableHeight - PipeInsertDistance * 2);
-        color(PipeColor)translate([ translate_x, translate_y, -tableHeight ])rotate([0,90,180 + joint_location_in_degrees])translate([0, 0, jointLegLength/2])cylinder(r=PipeSize, h= BaseRadius - (jointLegLength * 2) + (PipeInsertDistance * 2));
-        baseEdgeLength = sqrt(pow(BaseRadius, 2) + pow(BaseRadius, 2) - 2 * BaseRadius * BaseRadius * cos(TableCornerSpacingInDegrees));
+        color(PipeColor)
+            translate([translate_x, translate_y, - tableHeight + PipeInsertDistance])
+                cylinder(r = PipeSize,
+                h = tableHeight - PipeInsertDistance * 2);
 
         color(PipeColor)
-        translate([ translate_x, translate_y, -tableHeight ])
-        rotate([0,90, 180 + joint_location_in_degrees - (TableOutsideJointAngle / 2)])
-        translate([0, 0, jointLegLength/2])
-        cylinder(r=PipeSize, h= baseEdgeLength - jointLegLength);
+            translate([translate_x, translate_y, - tableHeight])
+                rotate([0, 90, 180 +
+                    joint_location_in_degrees])
+                    translate([0, 0, jointLegLength / 2])
+                        cylinder(r = PipeSize, h = BaseRadius - (
+                            jointLegLength * 2) + (PipeInsertDistance * 2));
+
+        baseEdgeLength = sqrt(pow(BaseRadius, 2) + pow(BaseRadius, 2) - 2 * BaseRadius * BaseRadius * cos(
+        TableCornerSpacingInDegrees));
+
+        color(PipeColor)
+            translate([translate_x, translate_y, - tableHeight])
+                rotate([0, 90, 180 + joint_location_in_degrees - (TableOutsideJointAngle / 2)])
+                    translate([0, 0, jointLegLength / 2])
+                        cylinder(r = PipeSize, h = baseEdgeLength - jointLegLength);
     }
 }
 
@@ -116,13 +119,13 @@ module tableLegT_Joint(joint_location_in_degrees) {
     translate_y = (BaseRadius) * sin(joint_location_in_degrees);
 
     jointLegs = [
-        [[ 0, 90, 0 ], jointInsideDiameter],
-        [[ 0, 90, 180 ], jointInsideDiameter],
-        [[ 0, 180, 0 ], jointInsideDiameter],
-    ];
+            [[0, 90, 0], jointInsideDiameter],
+            [[0, 90, 180], jointInsideDiameter],
+            [[0, 180, 0], jointInsideDiameter],
+        ];
 
-    translate([ translate_x, translate_y, 0 ])
-        rotate([ 0, 0, 180 + joint_location_in_degrees ]) joint(jointLegs, jointInsideDiameter);
+    translate([translate_x, translate_y, 0])
+        rotate([0, 0, 180 + joint_location_in_degrees]) joint(jointLegs, jointInsideDiameter);
 }
 
 module tableCorner(joint_location_in_degrees)
@@ -131,26 +134,30 @@ module tableCorner(joint_location_in_degrees)
     translate_y = tableRadius * sin(joint_location_in_degrees);
 
     jointLegs = [
-        [[ 0, 90, -(TableOutsideJointAngle / 2) ], jointInsideDiameter, true],
-        [[ 0, 90, +(TableOutsideJointAngle / 2) ], jointInsideDiameter, true],
-        [[ 0, tableSurfaceJointAngle, 0 ], jointInsideDiameter],
-        [[ 0, 90, 0 ], jointInsideDiameter, true],
-    ];
+            [[0, 90, - (TableOutsideJointAngle / 2)], jointInsideDiameter, true],
+            [[0, 90, + (TableOutsideJointAngle / 2)], jointInsideDiameter, true],
+            [[0, tableSurfaceJointAngle, 0], jointInsideDiameter],
+            [[0, 90, 0], jointInsideDiameter, true],
+        ];
 
-    translate([ translate_x, translate_y, 0 ])
-        rotate([ 0, 0, 180 + joint_location_in_degrees ]) joint(jointLegs, jointInsideDiameter, true);
+    translate([translate_x, translate_y, 0])
+        rotate([0, 0, 180 + joint_location_in_degrees]) joint(jointLegs, jointInsideDiameter, true);
 
-    if(RenderPipes){
+    if (RenderPipes) {
         // TODO: Properly calculate pipe insert distance and length and echo them
         pipeLength = tableRadius - (jointLegLength * 2) + (PipeInsertDistance * 2);
-        color(PipeColor)translate([ translate_x, translate_y, 0 ])rotate([0,90,180 + joint_location_in_degrees])translate([0, 0, jointLegLength - PipeInsertDistance])cylinder(r=PipeSize, h= pipeLength);
-        tableEdgeLength = sqrt(pow(tableRadius, 2) + pow(tableRadius, 2) - 2 * tableRadius * tableRadius * cos(TableCornerSpacingInDegrees));
-        color(PipeColor)translate([ translate_x, translate_y, 0 ])rotate([0,90, 180 + joint_location_in_degrees - (TableOutsideJointAngle / 2)])translate([0, 0, jointLegLength/2])cylinder(r=PipeSize, h= tableEdgeLength - PipeInsertDistance * 2);
+        color(PipeColor)translate([translate_x, translate_y, 0])rotate([0, 90, 180 + joint_location_in_degrees])
+            translate([0, 0, jointLegLength - PipeInsertDistance])cylinder(r = PipeSize, h = pipeLength);
+        tableEdgeLength = sqrt(pow(tableRadius, 2) + pow(tableRadius, 2) - 2 * tableRadius * tableRadius * cos(
+        TableCornerSpacingInDegrees));
+        color(PipeColor)translate([translate_x, translate_y, 0])rotate([0, 90, 180 + joint_location_in_degrees - (
+            TableOutsideJointAngle / 2)])translate([0, 0, jointLegLength / 2])cylinder(r = PipeSize, h = tableEdgeLength
+            - PipeInsertDistance * 2);
     }
 }
 
 module tableCenter(tableSideCount)
 {
-    jointLegs = [for (i = [0:tableSideCount -1]) [[0, 90, TableCornerSpacingInDegrees * i], jointInsideDiameter]];
+    jointLegs = [for (i = [0:tableSideCount - 1]) [[0, 90, TableCornerSpacingInDegrees * i], jointInsideDiameter]];
     joint(jointLegs, tableLegInsideJointDiameter);
 }

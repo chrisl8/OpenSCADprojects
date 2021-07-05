@@ -1,4 +1,3 @@
-// Load in some defaults
 include <commonParameters.scad>;
 
 shaftPipeInsideDiameter = verticalPipeInsideDiameter_1_25pvc;
