@@ -1,12 +1,12 @@
 // Load in some defaults
-include <commonParameters.scad>;
+include <parameters/commonParameters.scad>;
 
 jointLegLength = 75;
 
 // Pick what size pipes you are using
 horizontalPipeInsideDiameter = horizontalPipeInsideDiameter_1_25pvc;
 
-include <jointModule.scad>;
+include <modules/jointModule.scad>;
 
 // TODO: It broke:
 //       1. Too narrow, make it wider.

@@ -1,11 +1,11 @@
 // Load in some defaults
-include <commonParameters.scad>;
+include <parameters/commonParameters.scad>;
 
 // Pick what size pipes you are using
 horizontalPipeInsideDiameter = horizontalPipeInsideDiameter_0_50pvc;
 verticalPipeInsideDiameter = verticalPipeInsideDiameter_0_50pvc;
 
-include <jointModule.scad>;
+include <modules/jointModule.scad>;
 
 module BoxCornerJoint()
 {

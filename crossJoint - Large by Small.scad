@@ -1,5 +1,5 @@
 // Load in some defaults
-include <commonParameters.scad>;
+include <parameters/commonParameters.scad>;
 
 shaftPipeInsideDiameter = verticalPipeInsideDiameter_1_25pvc;
 
@@ -10,7 +10,7 @@ verticalPipeInsideDiameter = verticalPipeInsideDiameter_0_50pvc;
 // don't cross into each other at all.
 shaftOffset = (verticalPipeInsideDiameter / 2) + (shaftPipeInsideDiameter / 2) + (jointWallThickness + 0.15);
 
-include <jointModule.scad>;
+include <modules/jointModule.scad>;
 
 difference() {
     union() {

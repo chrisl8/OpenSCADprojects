@@ -26,8 +26,12 @@ inchesToMmConversionFactor = 25.4;
 // Current idea is 11 x 21 inches.
 walkerFootHeight = 11 * inchesToMmConversionFactor;
 walkerFootLength = 21 * inchesToMmConversionFactor;
-// Back of Foot is 1 inches longer to cause foot to hang as desired
-walkerFootCenterOffset = 1 * inchesToMmConversionFactor;
+// Back of Foot is 4 inches longer to cause foot to hang AND LOOK as desired
+// I tried 1 inch and it had basically NO affect on how it hangs.
+// I think it looks cool at 4 inches, so I am going to test that.
+// I *THINK* that it actually doesn't affect lenght of the walker, because the front
+// of one compensates for the back of the other.
+walkerFootCenterOffset = 4 * inchesToMmConversionFactor; // Remember to multiply any offset by the conversion factor.
 walkerFootFrontLength = (walkerFootLength / 2) - (walkerFootCenterOffset / 2);
 walkerFootBackLength = (walkerFootLength / 2) + (walkerFootCenterOffset / 2);
 
@@ -59,6 +63,8 @@ echo("walkerFootBackJointAngle (α):", walkerFootBackJointAngle);
 walkerAnkleBackAngle = asin(walkerFootBackLength / walkerFootBackTriangleTopLength);
 echo("walkerAnkleBackAngle (β)", walkerAnkleBackAngle);
 echo("=======================================================");
+
+walkerBodyLowerShaftHolderRollerBearingHeightAboveThrustBearing = 50;
 
 // Colors
 JointColor = "CornflowerBlue";

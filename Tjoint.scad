@@ -1,10 +1,10 @@
 // Load in some defaults
-include <commonParameters.scad>;
+include <parameters/commonParameters.scad>;
 
 // Pick what size pipes you are using
 horizontalPipeInsideDiameter = horizontalPipeInsideDiameter_0_50pvc;
 
-include <jointModule.scad>;
+include <modules/jointModule.scad>;
 
 module tJoint()
 {
@@ -16,3 +16,5 @@ module tJoint()
 
     rotate([0, 0, 0]) joint(jointLegs, horizontalPipeInsideDiameter, true);
 }
+
+tJoint();

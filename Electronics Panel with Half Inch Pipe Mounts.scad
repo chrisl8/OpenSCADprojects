@@ -1,5 +1,5 @@
 // Load in some defaults
-include <commonParameters.scad>;
+include <parameters/commonParameters.scad>;
 
 panelThickness = 5;
 panelHeight = 237;
@@ -11,7 +11,7 @@ cube([panelHeight, panelWidth, panelThickness], center =
 true);
 
 // These are used to mount the panel to a pipe
-include <jointModule.scad>;
+include <modules/jointModule.scad>;
 jointPinHoleOffset = 15;
 // Pick what size pipes you are using
 horizontalPipeInsideDiameter = horizontalPipeInsideDiameter_0_50pvc;

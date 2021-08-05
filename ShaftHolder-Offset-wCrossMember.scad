@@ -1,12 +1,12 @@
 // Load in some defaults
-include <commonParameters.scad>;
+include <parameters/commonParameters.scad>;
 
 shaftPipeInsideDiameter = verticalPipeInsideDiameter_1_25pvc;
 
 horizontalPipeInsideDiameter = horizontalPipeInsideDiameter_0_50pvc;
 verticalPipeInsideDiameter = verticalPipeInsideDiameter_0_50pvc;
 
-include <jointModule.scad>;
+include <modules/jointModule.scad>;
 
 module shaftT()
 {

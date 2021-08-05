@@ -1,4 +1,4 @@
-include <commonParameters.scad>;
+include <parameters/commonParameters.scad>;
 
 include <WalkerFoot-Ankle.scad>;
 
@@ -9,6 +9,9 @@ include <WalkerFoot-Ankle.scad>;
 //       or devise some way to calculate and ECHO it here.
 //       The primary purpose of this is to display the parts and prove that they work together,
 //       not to provide pipe lengths.
+
+// TODO: Remember to comment out the internal run of the module on each included joint,
+//       except for the ankle.
 
 // Foot Front Pipe
 color(PipeColor)

@@ -20,7 +20,15 @@ jointLegs = [
     ];
 
  */
-module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
+
+// This function makes creating the array for the joint module much easier.
+// Just name any parameters and skip those you don't care about and defaults will be injected.
+// The only REQUIRED paremeter is the insideDiameter, although a suitable default could be added here (instead of 0, so technically it isn't required).
+function legInstance(rotation = [0, 0, 0], insideDiameter = 0, flatBottom = false, pinHole = false, length = false,
+triangleSupport = false, labelText = false, reverseText = false) = [rotation,
+    insideDiameter, flatBottom, pinHole, length, triangleSupport, labelText, reverseText];
+
+module joint(legs = [], sphereJointInsideDiameter = 0, closeUpWithSphere = false)
 {
     difference()
         {
@@ -44,7 +52,7 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                                     ])
                                     cube([
                                         jointWallThickness,
-                                        // The 0.4 is a guess at width. A parameter would probably be better.
+                                        // The 0.5 is a guess at width. A parameter would probably be better.
                                             leg[1] * 0.5,
                                         thisJointLegLength
                                         ],
@@ -123,6 +131,20 @@ module joint(legs, sphereJointInsideDiameter, closeUpWithSphere)
                                         cylinder(
                                         h = leg[1] + jointWallThickness * 2 + 0.01, d = jointPinningHoleDiameter, center
                                         = true);
+                        }
+                        // Add text to bottom of a flat leg
+                        if (len(leg) > 6 && leg[6] != false) {
+                            rotate([leg[0][0], leg[0][1] + 90, leg[0][2]])
+                                translate([
+                                            - thisJointLegLength + jointPinHoleOffset + jointPinningHoleDiameter
+                                    ,
+                                    0,
+                                                sphereJointInsideDiameter / 2 + jointWallThickness - 1
+                                    ])
+                                    mirror([0, leg[7] == true ? 1 : 0, 0])
+                                        linear_extrude(1.1)
+                                            text(leg[6], size = 5, font = "Liberation Mono", valign = "center", halign =
+                                            "left");
                         }
                     }
 

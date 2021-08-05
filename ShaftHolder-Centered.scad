@@ -1,5 +1,5 @@
 // Load in some defaults
-include <commonParameters.scad>;
+include <parameters/commonParameters.scad>;
 
 // Pick what size pipes you are using
 horizontalPipeInsideDiameter = horizontalPipeInsideDiameter_0_50pvc;
@@ -7,7 +7,7 @@ shaftPipeInsideDiameter = verticalPipeInsideDiameter_1_25pvc;
 
 centerOffset = 20;
 
-include <jointModule.scad>;
+include <modules/jointModule.scad>;
 
 difference()
     {
@@ -37,6 +37,7 @@ difference()
                 translate([centerOffset, 0, 0])
                     rotate([0, 0, 180]) joint(jointLeg4, horizontalPipeInsideDiameter, true);
 
+                // TODO: This should be the part that sits on the thrust bearing holder, and holds the needle roller bearing.
                 shaftLeg = [
                         [[0, 0, 0], shaftPipeInsideDiameter, false, false],
                     ];

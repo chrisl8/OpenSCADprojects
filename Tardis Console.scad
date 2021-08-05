@@ -1,4 +1,4 @@
-include <commonParameters.scad>;
+include <parameters/commonParameters.scad>;
 
 // ******************************************
 // To Export a part for printing:
@@ -71,7 +71,7 @@ for (i = [0:tableSideCount - 1]) {
 // Lower table surface center
 tableCenter(tableSideCount);
 
-include <jointModule.scad>;
+include <modules/jointModule.scad>;
 
 module tableBaseJoint(joint_location_in_degrees)
 {
