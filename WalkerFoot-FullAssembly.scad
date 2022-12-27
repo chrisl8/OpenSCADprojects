@@ -37,12 +37,12 @@ rotate([0, 0, - walkerAnkleBackAngle])
 
 // Foot Bottom Pipe - It needs to be split into two, because it is offset
 // Front
-color(PipeColor)
+color("blue")
     rotate([- 90, 0, 0])
         translate([walkerFootHeight, 0, 0])
             cylinder(h = walkerFootFrontLength, r = verticalPipeInsideDiameter_0_50pvc / 2);
 // Back
-color(PipeColor)
+color("red")
     rotate([90, 0, 0])
         translate([walkerFootHeight, 0, 0])
             cylinder(h = walkerFootBackLength, r = verticalPipeInsideDiameter_0_50pvc / 2);
@@ -52,3 +52,7 @@ include <Tjoint.scad>
 translate([walkerFootHeight, 0, 0])
     rotate([0, 0, 180])
         tJoint();
+
+color(PipeColor)
+    rotate([0, 90, 0])
+        cylinder(h = walkerFootHeight, r = verticalPipeInsideDiameter_0_50pvc / 2);

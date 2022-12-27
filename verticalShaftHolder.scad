@@ -7,14 +7,14 @@ include <parameters/verticalShaftHolderParameters.scad>;
 // and then have a part that moves around the shaft sit on it.
 
 module verticalShaftHolder(includePinnedRing = true, thrustBearingSupportHeight = thrustBearingHeight,
-rollerBearingHeightAboveThrustBearing = thrustBearingHeight) {
+rollerBearingHeightAboveThrustBearing = thrustBearingHeight, roundedThrustBearingSupport = true, thrustBearingHeightOverride = thrustBearingHeight) {
 
     totalPartHeight = (includePinnedRing ? comfortablePinnedSectionHeight : 0) +
         thrustBearingSupportHeight +
-        thrustBearingHeight +
+        thrustBearingHeightOverride +
         rollerBearingHeightAboveThrustBearing +
         rollerBearingHeight;
-    echo(totalPartHeight - thrustBearingSupportHeight);
+    echo(str("Height: ", totalPartHeight));
 
     difference() {
         union() {
@@ -29,7 +29,18 @@ rollerBearingHeightAboveThrustBearing = thrustBearingHeight) {
 
             // This is to support the thrust bearing
             translate([0, 0, includePinnedRing ? comfortablePinnedSectionHeight : 0])
-                cylinder(h = thrustBearingSupportHeight, d = thrustBearingOutsideDiameter);
+                rotate([180, 0, 0])
+                    translate([0, 0, - thrustBearingSupportHeight])
+                        if (roundedThrustBearingSupport) {
+                            hull() {
+                                cylinder(h = thrustBearingSupportHeight - 5, d = thrustBearingOutsideDiameter);
+                                translate([0, 0, thrustBearingSupportHeight - 5])
+                                    rotate_extrude()
+                                        translate([(thrustBearingOutsideDiameter / 2) - 5, 0]) circle(r = 5);
+                            }
+                        } else {
+                                cylinder(h = thrustBearingSupportHeight, d = thrustBearingOutsideDiameter);
+                        }
         }
         // Hollow out for the pipe to fit in.
         translate([0, 0, - 1]) // -1 just ensures we clear the bottom and don't leave a 2d "film"
@@ -46,7 +57,7 @@ rollerBearingHeightAboveThrustBearing = thrustBearingHeight) {
     }
 }
 
-//verticalShaftHolder(includePinnedRing = false);
+//verticalShaftHolder();
 
 // Use this to view the two shafts together
 //include<verticalShaftHolderPivotPoint.scad>;

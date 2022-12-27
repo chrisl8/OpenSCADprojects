@@ -17,10 +17,10 @@ module walkerFootFrontLowerJoint(labelText, reverseText = false)
         90, length = footLowerJointLegLength, labelText = "Mechanoid", reverseText = reverseText),
         legInstance(rotation = [0, 90, walkerFootFrontJointAngle], insideDiameter = horizontalPipeInsideDiameter,
         flatBottom = true, pinHole = 90, length = footLowerJointLegLength, triangleSupport = [50,
-            - (walkerFootFrontJointAngle / 2), 30], labelText = labelText, reverseText = reverseText),
+            - (walkerFootFrontJointAngle / 2), 25], labelText = labelText, reverseText = reverseText),
         // Upright
         legInstance(rotation = [0, 0, 0], insideDiameter = verticalPipeInsideDiameter, pinHole =
-            walkerFootFrontJointAngle - 90, length = 55, triangleSupport = [1, 24, 45]),
+            walkerFootFrontJointAngle - 90, length = 55, triangleSupport = [1, 23, 45]),
         ], sphereJointInsideDiameter = horizontalPipeInsideDiameter, closeUpWithSphere = true);
 }
 

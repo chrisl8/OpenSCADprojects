@@ -20,15 +20,15 @@ module walkerFootBackLowerJoint(labelText, reverseText = false)
             - (walkerFootBackJointAngle * 1.5), 30], labelText = labelText, reverseText = reverseText),
         // Upright
         legInstance(insideDiameter = verticalPipeInsideDiameter, pinHole = walkerFootBackJointAngle, length = 55,
-        triangleSupport = [1, - 22.5, 45]),
+        triangleSupport = [1, - 23, 45]),
         ];
 
     rotate([0, 0, 180]) joint(jointLegs, horizontalPipeInsideDiameter, true);
 }
 
 // Left side
-walkerFootBackLowerJoint("Foot-Back-L");
+//walkerFootBackLowerJoint("Foot-Back-L");
 
 // Right side
-//mirror([1, 0, 0])
-//    walkerFootBackLowerJoint("Foot-Back-R", true);
+mirror([1, 0, 0])
+    walkerFootBackLowerJoint("Foot-Back-R", true);

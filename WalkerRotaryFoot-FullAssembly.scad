@@ -1,4 +1,4 @@
-include <WalkerRotaryFoot-OutsideCorner.scad>;
+include <regularPolygonOutsideJoint.scad>;
 include<WalkerRotaryFoot-Top-ShaftHolder.scad>;
 include<WalkerRotaryFoot-Lower-ShaftHolder.scad>;
 
@@ -63,4 +63,4 @@ for (i = [0:walkerRotaryFootLegCount - 1]) {
 translate([0, 0, walkerRotaryFootHeight])
     WalkerRotaryFootTopShaftHolder();
 
-WalkerRotaryFootLowerShaftHolder();
+WalkerRotaryFootLowerShaftHolder(8);

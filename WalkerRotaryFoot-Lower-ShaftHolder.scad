@@ -7,6 +7,7 @@ shaftPipeInsideDiameter = verticalPipeInsideDiameter_1_25pvc;
 
 include <modules/jointModule.scad>;
 include <modules/legsAroundTheCenterPoint.scad>;
+include <verticalShaftHolder.scad>;
 
 module center(supportHeight) {
     totalPartHeight = comfortablePinnedSectionHeight + supportHeight;
@@ -32,12 +33,12 @@ module center(supportHeight) {
     }
 }
 
-module WalkerRotaryFootLowerShaftHolder() {
+module WalkerRotaryFootLowerShaftHolder(legCount = 8, legLength = 80) {
     difference()
         {
             union()
                 {
-                    legsAroundTheCenterPoint(legCount = 8, legLength = 80);
+                    legsAroundTheCenterPoint(legCount = legCount, legLength = legLength);
                 }
             union()
                 {
@@ -50,7 +51,6 @@ module WalkerRotaryFootLowerShaftHolder() {
     translate([0,0,-horizontalPipeInsideDiameter/2 - jointWallThickness])
     center(supportHeight = horizontalPipeInsideDiameter + (jointWallThickness * 2));
 
-    // TODO: The BOTTOM rotary foot shaft holder should have a pinned ring on TOP of it.
 }
 
 //WalkerRotaryFootLowerShaftHolder();

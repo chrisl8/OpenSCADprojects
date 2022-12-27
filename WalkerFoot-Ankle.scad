@@ -6,9 +6,10 @@ walkerAnkleShaftPipeInsideDiameter = verticalPipeInsideDiameter_1_25pvc;
 
 include <modules/jointModule.scad>;
 
-// Just touches the shaft holder itself, to improve stability by printing as one part.
-// Do double check that this looks OK in the slicer.
-horizontalJointOffset = 39;
+// Keeping this as close as possible,
+// because if it is any further away, the two pipes (the one in here and the shaft) create a nasty pinch point
+// Keeping them close prevents that. I think 1/4 inch is the minimum considered a pinch point.
+horizontalJointOffset = 35.8;
 
 module clearShaft()
 {
@@ -17,6 +18,8 @@ module clearShaft()
     translate([0, 0, - (horizontalPipeInsideDiameter_0_50pvc / 2) - jointWallThickness - 0.01])
         cylinder(h = jointLegLength, d = walkerAnkleShaftPipeInsideDiameter);
 }
+
+// TODO: We could add a bearing to the shaft holder
 
 module walkerFootAnkle(sideLabelText, reverseText = false) {
     difference()
@@ -33,7 +36,7 @@ module walkerFootAnkle(sideLabelText, reverseText = false) {
                     joint(upright, horizontalPipeInsideDiameter_0_50pvc, false);
 
                     horizontal = [
-                            [[0, 0, 0], verticalPipeInsideDiameter_0_50pvc, false, true, 75, true],
+                            [[0, 0, 0], verticalPipeInsideDiameter_0_50pvc, false, true, 75],
                         ];
                     translate([horizontalJointOffset, 0, 0])
                         rotate([0, 0, 180]) joint(horizontal, horizontalPipeInsideDiameter_0_50pvc, false);
@@ -60,7 +63,7 @@ module walkerFootAnkle(sideLabelText, reverseText = false) {
                     // Extra triangle supports
                     horizontalSupportTriangleSize = 40;
                     rotate([- 90, 270, 0])
-                        translate([10, 50, 0])
+                        translate([10, 49, 0])
                             linear_extrude(height = 8, center = true, convexity = 10, twist = 0)
                                 polygon(points = [[horizontalSupportTriangleSize, 0], [0, 0], [0,
                                     horizontalSupportTriangleSize]],
@@ -107,6 +110,8 @@ module walkerFootAnkle(sideLabelText, reverseText = false) {
     }
 
 }
+
+// NOTE: If walkerFootCenterOffset is set to 0, these should be the same, but test first!
 
 // Left Side
 //walkerFootAnkle("Left");

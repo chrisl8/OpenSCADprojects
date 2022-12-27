@@ -54,14 +54,6 @@ module BoxCornerJoint()
 
 BoxCornerJoint();
 
-batteryHolderWallThickness = 5;
-
-// Battery Dimensions
-// https://www.power-sonic.com/product/ps-1290/
-batteryHeight = 94;
-batteryWidth = 65;
-batteryLength = 141;
-
 translate([- (horizontalPipeInsideDiameter * 2) - batteryHolderWallThickness + 0.8, 0, (batteryHeight / 2) - (
     batteryHolderWallThickness / 2) - 0.5 + batteryHolderWallThickness * 4])
     difference() {

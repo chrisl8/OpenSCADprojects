@@ -9,6 +9,9 @@ include <modules/jointModule.scad>;
 include <modules/legsAroundTheCenterPoint.scad>;
 include <verticalShaftHolderPivotPoint.scad>;
 
+// TODO: Should this part incorporate the batteryholder?
+// TODO: This part needs to accomodate a thrust bearing on top and a pinned piece above it.
+
 module WalkerBodyLowerCenterShaftRotationPoint() {
     difference()
         {

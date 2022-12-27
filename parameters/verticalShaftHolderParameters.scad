@@ -2,7 +2,7 @@
 
 rollerBearingInsideDiameter = 45; // Same as Thrust Bearing bore diameter
 rollerBearingHeight = 20;
-rollerBearingOutsideDiameter = 52;
+rollerBearingOutsideDiameter = 52.2;
 
 thrustBearingOutsideDiameter = 65;
 thrustBearingHeight = 14;
