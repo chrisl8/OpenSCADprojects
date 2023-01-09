@@ -30,17 +30,28 @@ include<TardisConsole-InnerUpperTableCenter-TimeRotorHolder.scad>;
 // Table Surface (raised triangles): 1/2" PVC
 // Center "hold down": 1/2" PVC
 
-// Bottom of Table Base
+// Table Base
 translate([0, 0, - tableHeight]) {
-  // Bottom of Table Base Center
-  WalkerRotaryFootLowerShaftHolder(6);
-  // Bottom of Table Base Outside joints
+  // Center
+  WalkerRotaryFootLowerShaftHolder(6); // TODO: Fix in FreeCAD and reenable.
   for (i = [0:tableSideCount - 1]) {
     rotate([0, 0, (TableCornerSpacingInDegrees * i) + 90])
       translate([0, BaseRadius, 0])
-        rotate([0, 0, 90]) {
+        rotate([0, 0, 90])
+          // Outer Joints
           regularPolygonOutsideJoint(legCount = tableSideCount, legLength = 65);
-          if (RenderPipes) {
+  }
+}
+
+// Table Base Pipes
+// NOTE: Some code here is duplicated from the Table Base section above,
+// but FreeCAD creates artifcatcs when too much is done together.
+if (RenderPipes) {
+  translate([0, 0, - tableHeight]) {
+    for (i = [0:tableSideCount - 1]) {
+      rotate([0, 0, (TableCornerSpacingInDegrees * i) + 90])
+        translate([0, BaseRadius, 0])
+          rotate([0, 0, 90]) {
             // Upright Legs
             color(PipeColor)
               rotate([0, 0, 0])
@@ -54,10 +65,9 @@ translate([0, 0, - tableHeight]) {
               rotate([90, 0, 90 - ((tableSideCount - 2) * 180) / tableSideCount])
                 cylinder(r = PipeSize, h = BaseRadius - 15);
           }
-        }
+    }
   }
 }
-
 // Lower table surface center Time Roter Base
 module buildTimeRotorBase() {
   WalkerRotaryFootLowerShaftHolder(6, 100);
@@ -140,8 +150,8 @@ module tableCornerJoint(joint_location_in_degrees)
 
   // Comment this out to see how the pipes meet in the center to set lenghts.
   // Set the first of "true, true" to false to open up the end to see inside.
-    translate([translate_x, translate_y, 0])
-      rotate([0, 0, 180 + joint_location_in_degrees]) joint(jointLegs, jointInsideDiameter, true, true);
+  translate([translate_x, translate_y, 0])
+    rotate([0, 0, 180 + joint_location_in_degrees]) joint(jointLegs, jointInsideDiameter, true, true);
 
   if (RenderPipes) {
 
@@ -181,7 +191,7 @@ module buildTimeRotorHolder() {
   translate([0, 0, timeRotorHolderStartingHeight]) {
     difference() {
       // ringPosition is eyeballed to sit flat on the print plate level with the end of the pipes.
-      TimeRotorHolder(legCount = 6, insideDiameter = 180, outsideRingDiameter = 190, ringHeight = 60, ringPosition = - 50, legAngle = tableSurfaceJointAngle, legLength = 150);
+      TimeRotorHolder(legCount = 6, insideDiameter = 180, outsideRingDiameter = 190, ringHeight = 40, ringPosition = - 50, legAngle = tableSurfaceJointAngle, legLength = 150);
       union() {
         difference() {
           // Cut this off to fit on the print bed

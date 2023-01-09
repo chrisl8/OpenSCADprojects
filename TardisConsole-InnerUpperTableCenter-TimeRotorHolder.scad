@@ -12,11 +12,9 @@ module timeRotorOffsetLegsAroundCenterPoint(legCount = 1, legLength = false, inc
   legSpacingInDegrees = 360 / legCount;
 
   for (i = [0:legCount - 1]) {
-    jointLeg = [
-      legInstance(rotation = [0, 180-legAngle, 0], insideDiameter =
-      horizontalPipeInsideDiameter, pinHole = true, length = legLength)];
+    jointLeg = [legInstance(rotation = [0, 180 - legAngle, 0], insideDiameter = horizontalPipeInsideDiameter, pinHole = true, length = legLength)];
     rotate([0, 0, legSpacingInDegrees * i])
-      joint(jointLeg, horizontalPipeInsideDiameter, true, false, 40);
+      joint(legs = jointLeg, sphereJointInsideDiameter = 0, closeUpWithSphere = false, addCircleToFlatBottom = false, jointPinHoleOffset = 40);
   }
 }
 
@@ -36,7 +34,7 @@ module TimeRotorHolder(legCount = 6, insideDiameter = 45, outsideRingDiameter = 
           timeRotorHolderCenter(supportHeight = horizontalPipeInsideDiameter + (jointWallThickness * 2), outsideRingDiameter = outsideRingDiameter, insideDiameter = insideDiameter, ringHeight = ringHeight, ringPosition = ringPosition);
 
           if (includeLegs)
-            timeRotorOffsetLegsAroundCenterPoint(legCount = legCount, legLength = legLength, legAngle = legAngle);
+          timeRotorOffsetLegsAroundCenterPoint(legCount = legCount, legLength = legLength, legAngle = legAngle);
         }
       union()
         {
@@ -46,7 +44,5 @@ module TimeRotorHolder(legCount = 6, insideDiameter = 45, outsideRingDiameter = 
         }
     }
 }
-
-// TODO: The entire thing needs to be cut off with a square the size of the print bed
 
 //TimeRotorHolder(legCount = 6, insideDiameter = 180, outsideRingDiameter = 190, ringHeight = 50, ringPosition = -44, legAngle = 25, legLength = 75);
