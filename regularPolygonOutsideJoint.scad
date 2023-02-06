@@ -7,13 +7,13 @@ verticalPipeInsideDiameter = verticalPipeInsideDiameter_0_50pvc;
 
 include <modules/jointModule.scad>;
 
-module regularPolygonOutsideJoint(legCount = 4, legLength = false) {
+module regularPolygonOutsideJoint(legCount = 4, legLength = false, labelText = false) {
 
   legSpacingInDegrees = ((legCount - 2) * 180) / legCount;
 
   jointLegs = [
     // Center Leg
-    legInstance(rotation = [0, 90, 0], insideDiameter = horizontalPipeInsideDiameter, flatBottom = true, pinHole = true, length = legLength),
+    legInstance(rotation = [0, 90, 0], insideDiameter = horizontalPipeInsideDiameter, flatBottom = true, pinHole = true, length = legLength, labelText = labelText),
     // Perimiter Legs
     legInstance(rotation = [legSpacingInDegrees / 2, 90, 0], insideDiameter = horizontalPipeInsideDiameter, flatBottom = true, pinHole = true, length = legLength, triangleSupport = [0, - 8, 40]),
     legInstance(rotation = [- legSpacingInDegrees / 2, 90, 0], insideDiameter = horizontalPipeInsideDiameter, flatBottom = true, pinHole = true, length = legLength, triangleSupport = [0, (- legSpacingInDegrees / 2) - 10, 40]),
