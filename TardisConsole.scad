@@ -89,12 +89,6 @@ translate([0, 0, tableUpperT_JointRise])
     tableUpperT_Joint(TableCornerSpacingInDegrees * i);
   }
 
-tableUpperTieDownRootRise = 88; // Eyballed this for visualizing.
-translate([0, 0, tableUpperTieDownRootRise])
-  for (i = [0:tableSideCount - 1]) {
-    tableUpperTieDownRoot(TableCornerSpacingInDegrees * i, BaseRadius + 200);
-  }
-
 // Table Top Outside Corner joints
 for (i = [0:tableSideCount - 1]) {
   tableCornerJoint(TableCornerSpacingInDegrees * i);
@@ -128,23 +122,6 @@ module tableUpperT_Joint(joint_location_in_degrees) {
     legInstance(rotation = [0, 180 + tableSurfaceJointAngle, 0], insideDiameter = jointInsideDiameter),
     // Verticle Leg
     legInstance(rotation = [0, 180, 0], insideDiameter = jointInsideDiameter),
-    ];
-
-  translate([translate_x, translate_y, 0])
-    rotate([0, 0, 180 + joint_location_in_degrees]) joint(jointLegs, jointInsideDiameter);
-}
-
-module tableUpperTieDownRoot(joint_location_in_degrees, distanceFromCenter) {
-  // TODO: Turn this into a tie-down
-  translate_x = (distanceFromCenter) * cos(joint_location_in_degrees);
-  translate_y = (distanceFromCenter) * sin(joint_location_in_degrees);
-
-  jointLegs = [
-    // Horizontal Legs
-    legInstance(rotation = [0, tableSurfaceJointAngle, 0], insideDiameter = jointInsideDiameter),
-    legInstance(rotation = [0, 180 + tableSurfaceJointAngle, 0], insideDiameter = jointInsideDiameter),
-    // Verticle Leg
-//    legInstance(rotation = [0, 180, 0], insideDiameter = jointInsideDiameter),
     ];
 
   translate([translate_x, translate_y, 0])
@@ -206,8 +183,7 @@ module tableCenter(tableSideCount)
 }
 
 module buildTimeRotorHolder() {
-  timeRotorHolderStartingHeight = 218; // Eyeballed this for visualization.
-  translate([0, 0, timeRotorHolderStartingHeight]) {
+  translate([0, 0, tableTopCenterRise]) {
     difference() {
       // ringPosition is eyeballed to sit flat on the print plate level with the end of the pipes.
       TimeRotorHolder(legCount = 6, insideDiameter = 180, outsideRingDiameter = 190, ringHeight = 40, ringPosition = - 50, legAngle = tableSurfaceJointAngle, legLength = 150);

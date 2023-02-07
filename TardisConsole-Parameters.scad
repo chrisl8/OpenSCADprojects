@@ -2,7 +2,7 @@
 // This is now 1520,
 // But some original numbers were derived from 1111
 //tableDiameter = 1111; // Corner to Corner, not side to side
-tableDiameter = 1520; // Corner to Corner, not side to side
+tableDiameter = 1480; // Corner to Corner, not side to side
 tableSideCount = 6;
 jointInsideDiameter = horizontalPipeInsideDiameter_0_50pvc;
 tableLegInsideJointDiameter = horizontalPipeInsideDiameter_0_50pvc;
@@ -12,14 +12,11 @@ RenderPipes = true;
 tableRadius = tableDiameter / 2;
 tableHeight = 750; // Does not affect printed parts.
 
-// This is now static, because there are limits to how low it can be, or how high I WANT it to be,
-// but the old setting is how we arrived at it initially.
-//tableTopCenterRise = 155;
-//tableSurfaceJointAngle = atan(tableRadius / tableTopCenterRise);
-//echo(tableSurfaceJointAngle);
-// tableRadius was 1111 / 2 at the time
-// atan ((1111 / 2) / 155) = 74.4094
-tableSurfaceJointAngle = 74;
+tableTopCenterRise = 218;
+tableSurfaceJointAngle = atan(tableRadius / tableTopCenterRise);
+echo(tableSurfaceJointAngle);
+//tableSurfaceJointAngle = 74; // OLD setting
+// NOTE: If this gets too small, the joint won't actually work properly.
 
 // Calculated Constants
 BaseRadius = tableRadius / 3;
