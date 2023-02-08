@@ -142,7 +142,7 @@ module tableCornerJoint(joint_location_in_degrees)
     legInstance(rotation = [0, 90, 0], insideDiameter = jointInsideDiameter, flatBottom = true, triangleSupport = [0
       , - 15, 60], length = 150, pinHole = true, labelText="Table Outside Corner"),
     legInstance(rotation = [0, tableSurfaceJointAngle, 0], insideDiameter = jointInsideDiameter, length = 100, pinHole = true),
-    ]; // 794
+    ]; // 100 normally, 794 for testing things
 
   // Comment this out to see how the pipes meet in the center to set lenghts.
   // Set the first of "true, true" to false to open up the end to see inside.
@@ -208,20 +208,20 @@ buildTimeRotorHolder();
 
 module panel(joint_location_in_degrees) {
   xOffset = 8.7;
-  yOffset = 50;
-  panelThickness = 5; // 0.01
+  yOffset = 51;
+  panelThickness = 5; // 5 normally, 0.01 for testing alignment with pipes below
   translate_x = tableRadius * cos(joint_location_in_degrees) + xOffset;
   translate_x_1 = tableRadius * cos(joint_location_in_degrees * 2) - xOffset;
   translate_y = tableRadius * sin(joint_location_in_degrees) + yOffset;
   difference() {
-    translate([0, 1, 232.95])
-      rotate([tableSurfaceJointAngle - 92.322, 0, 0])
+    translate([0, 1, 233.1]) // Eyeball this
+      rotate([tableSurfaceJointAngle - 92.38, 0, 0]) // and this to make the panels sit right on the extended corner pipe.
         linear_extrude(height = panelThickness, center = false, convexity = 0, twist = 0)
           polygon(points = [[0, 0], [translate_x_1, translate_y], [translate_x, translate_y]],
           paths =
             [[0, 1, 2]]);
     translate([0, 0, - 500])
-      cylinder(h = 1000, d = 195);
+      cylinder(h = 1000, d = 191);
   }
 }
 for (i = [0:tableSideCount - 1]) {
