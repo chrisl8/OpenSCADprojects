@@ -39,7 +39,7 @@ translate([0, 0, - tableHeight]) {
       translate([0, BaseRadius, 0])
         rotate([0, 0, 90])
           // Outer Joints
-          regularPolygonOutsideJoint(legCount = tableSideCount, legLength = 65, labelText="TARDIS");
+          regularPolygonOutsideJoint(legCount = tableSideCount, legLength = 65, labelText = "TARDIS");
   }
 }
 
@@ -79,9 +79,9 @@ buildTimeRotorBase();
 
 // Table Base Upper T Joints
 for (i = [0:tableSideCount - 1]) {
-  tableLegT_Joint(TableCornerSpacingInDegrees * i);
+  tableLegCrossJoint(TableCornerSpacingInDegrees * i);
 }
-//!tableLegT_Joint(0);
+//!tableLegCrossJoint(0);
 
 tableUpperT_JointRise = 145.25; // Eyballed this for visualizing.
 translate([0, 0, tableUpperT_JointRise])
@@ -93,23 +93,24 @@ translate([0, 0, tableUpperT_JointRise])
 for (i = [0:tableSideCount - 1]) {
   tableCornerJoint(TableCornerSpacingInDegrees * i);
 }
-//!tableCornerJoint(0);
+tableCornerJoint(0);
 
 include <modules/jointModule.scad>;
 
-module tableLegT_Joint(joint_location_in_degrees) {
+module tableLegCrossJoint(joint_location_in_degrees) {
   translate_x = (BaseRadius) * cos(joint_location_in_degrees);
   translate_y = (BaseRadius) * sin(joint_location_in_degrees);
 
   jointLegs = [
     legInstance(rotation = [0, 90, 90], insideDiameter = jointInsideDiameter, flatBottom = true, labelText = "TARDIS"),
     legInstance(rotation = [0, 90, 0], insideDiameter = jointInsideDiameter, flatBottom = true),
-    legInstance(rotation = [0, 90, 180], insideDiameter = jointInsideDiameter, flatBottom = true, pinHole = true),
-    legInstance(rotation = [0, 90, -90], insideDiameter = jointInsideDiameter, flatBottom = true),
+    legInstance(rotation = [0, 90, 180], insideDiameter = jointInsideDiameter, flatBottom = true, pinHole = 90),
+    legInstance(rotation = [0, 90, - 90], insideDiameter = jointInsideDiameter, flatBottom = true, pinHole = 90),
     ];
 
   translate([translate_x, translate_y, 0])
-    rotate([90, 0, 180 + joint_location_in_degrees]) joint(jointLegs, jointInsideDiameter);
+    rotate([90, 0, 180 + joint_location_in_degrees])
+      joint(jointLegs, jointInsideDiameter);
 }
 
 module tableUpperT_Joint(joint_location_in_degrees) {
@@ -118,14 +119,15 @@ module tableUpperT_Joint(joint_location_in_degrees) {
 
   jointLegs = [
     // Horizontal Legs
-    legInstance(rotation = [0, tableSurfaceJointAngle, 0], insideDiameter = jointInsideDiameter),
-    legInstance(rotation = [0, 180 + tableSurfaceJointAngle, 0], insideDiameter = jointInsideDiameter),
+    legInstance(rotation = [0, 90, 90 - tableSurfaceJointAngle], insideDiameter = jointInsideDiameter, flatBottom = true),
+    legInstance(rotation = [0, 90, 90 - tableSurfaceJointAngle + 180], insideDiameter = jointInsideDiameter, flatBottom = true),
     // Verticle Leg
-    legInstance(rotation = [0, 180, 0], insideDiameter = jointInsideDiameter),
+    legInstance(rotation = [0, 90, - 90], insideDiameter = jointInsideDiameter, flatBottom = true, labelText = "TARDIS"),
     ];
 
   translate([translate_x, translate_y, 0])
-    rotate([0, 0, 180 + joint_location_in_degrees]) joint(jointLegs, jointInsideDiameter);
+    rotate([90, 0, 180 + joint_location_in_degrees])
+      joint(jointLegs, jointInsideDiameter); // [0, 0, 180 + joint_location_in_degrees]
 }
 
 module tableCornerJoint(joint_location_in_degrees)
@@ -137,10 +139,10 @@ module tableCornerJoint(joint_location_in_degrees)
     legInstance(rotation = [0, 90, - (TableOutsideJointAngle / 2)], insideDiameter = jointInsideDiameter, flatBottom
     = true, triangleSupport = [0, - 75, 60], length = 75, pinHole = true),
     legInstance(rotation = [0, 90, + (TableOutsideJointAngle / 2)], insideDiameter = jointInsideDiameter, flatBottom
-    = true, length = 75, pinHole = true, labelText="TARDIS"),
+    = true, length = 75, pinHole = true, labelText = "TARDIS"),
     // If you extend this to run longer you can test to see if it lines up with the Upper T Joint and the Time Rotor Holder
     legInstance(rotation = [0, 90, 0], insideDiameter = jointInsideDiameter, flatBottom = true, triangleSupport = [0
-      , - 15, 60], length = 150, pinHole = true, labelText="Table Outside Corner"),
+      , - 15, 60], length = 150, pinHole = true, labelText = "Table Outside Corner"),
     legInstance(rotation = [0, tableSurfaceJointAngle, 0], insideDiameter = jointInsideDiameter, length = 100, pinHole = true),
     ]; // 100 normally, 794 for testing things
 
@@ -185,7 +187,8 @@ module tableCenter(tableSideCount)
 module buildTimeRotorHolder() {
   translate([0, 0, tableTopCenterRise]) {
     difference() {
-      // ringPosition is eyeballed to sit flat on the print plate level with the end of the pipes.
+      // ringPosition is eyeballed to be high enough to sit even with panels,
+      // but low enough to get cut off with the pipes so that it sits on the print bed.
       TimeRotorHolder(legCount = 6, insideDiameter = 180, outsideRingDiameter = 190, ringHeight = 40, ringPosition = - 50, legAngle = tableSurfaceJointAngle, legLength = 150);
       union() {
         difference() {
@@ -196,8 +199,10 @@ module buildTimeRotorHolder() {
           cube(size = [250, 210, cutoutHeight + 1],
           center = true);
         }
-        // Cut the bottom off to ensure that the bottom of the ring and all pipes touch the print bed
-        bottomOfTimeRotorHolderCutoff = - 97.5;
+        // Cut the bottom off to ensure that the bottom of the ring and all pipes touch the print bed without
+        // leaving voids where the pipes go in, but also without any pipe having too little surface touching
+        // the bed.
+        bottomOfTimeRotorHolderCutoff = - 99;
         translate([0, 0, bottomOfTimeRotorHolderCutoff])
           cube(size = [350, 310, 100], center = true);
       }
@@ -224,8 +229,11 @@ module panel(joint_location_in_degrees) {
       cylinder(h = 1000, d = 191);
   }
 }
-for (i = [0:tableSideCount - 1]) {
-  rotate([0, 0, TableCornerSpacingInDegrees * i])
-    panel(TableCornerSpacingInDegrees);
+module panels() {
+  for (i = [0:tableSideCount - 1]) {
+    rotate([0, 0, TableCornerSpacingInDegrees * i])
+      panel(TableCornerSpacingInDegrees);
+  }
 }
+panels();
 
