@@ -45,7 +45,7 @@ translate([0, 0, - tableHeight]) {
 
 // Table Base Pipes
 // NOTE: Some code here is duplicated from the Table Base section above,
-// but FreeCAD creates artifcatcs when too much is done together.
+// but FreeCAD creates artifacts when too much is done together.
 if (RenderPipes) {
   translate([0, 0, - tableHeight]) {
     for (i = [0:tableSideCount - 1]) {
