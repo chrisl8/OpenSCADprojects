@@ -88,12 +88,12 @@ translate([0, 0, tableUpperT_JointRise])
   for (i = [0:tableSideCount - 1]) {
     tableUpperT_Joint(TableCornerSpacingInDegrees * i);
   }
+//!tableUpperT_Joint(0);
 
 // Table Top Outside Corner joints
 for (i = [0:tableSideCount - 1]) {
   tableCornerJoint(TableCornerSpacingInDegrees * i);
 }
-tableCornerJoint(0);
 
 include <modules/jointModule.scad>;
 
