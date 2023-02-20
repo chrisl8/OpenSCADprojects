@@ -48,8 +48,8 @@ module WalkerRotaryFootLowerShaftHolder(legCount = 8, legLength = 80) {
                 }
         }
 
-    translate([0,0,-horizontalPipeInsideDiameter/2 - jointWallThickness])
-    center(supportHeight = horizontalPipeInsideDiameter + (jointWallThickness * 2));
+    translate([0, 0, - horizontalPipeInsideDiameter / 2 - jointWallThickness])
+        center(supportHeight = horizontalPipeInsideDiameter + (jointWallThickness * 2));
 
 }
 
