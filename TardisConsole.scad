@@ -55,15 +55,23 @@ if (RenderPipes) {
                         // Upright Legs
                         color(PipeColor)
                             rotate([0, 0, 0])
-                                cylinder(r = PipeSize, h = tableHeight + 100);
+                                translate([0, 0, 18])
+                                    cylinder(r = PipeSize, h = tableHeight - 30);
+                        // Table Bottom to Top Supports
+                        color(PipeColor)
+                            rotate([0, 0, 0])
+                                translate([0, 0, tableHeight + 12])
+                                    cylinder(r = PipeSize, h = 118);
                         // Radial pipes
                         color(PipeColor)
-                            rotate([0, 90, 180])
-                                cylinder(r = PipeSize, h = BaseRadius - 33);
+                            translate([- 20, 0, 0])
+                                rotate([0, 90, 180])
+                                    cylinder(r = PipeSize, h = BaseRadius - 55);
                         // Outside Edge
                         color(PipeColor)
                             rotate([90, 0, 90 - ((tableSideCount - 2) * 180) / tableSideCount])
-                                cylinder(r = PipeSize, h = BaseRadius - 15);
+                                translate([0, 0, 20])
+                                    cylinder(r = PipeSize, h = BaseRadius - 40);
                     }
         }
     }
@@ -181,21 +189,13 @@ module tableCornerJoint(joint_location_in_degrees)
     }
 }
 
-module tableCenter(tableSideCount)
-{
-    jointLegs = [for (i = [0:tableSideCount - 1]) legInstance(rotation = [0, 90, TableCornerSpacingInDegrees * i],
-    insideDiameter = jointInsideDiameter, flatBottom = true, triangleSupport = [0
-        , - 15 + TableCornerSpacingInDegrees * i, 30])];
-    joint(jointLegs, tableLegInsideJointDiameter);
-}
-
 module buildTimeRotorHolder() {
     translate([0, 0, tableTopCenterRise]) {
         difference() {
             // ringPosition is eyeballed to be high enough to sit even with panels,
             // but low enough to get cut off with the pipes so that it sits on the print bed.
             TimeRotorHolder(legCount = 6, insideDiameter = 180, outsideRingDiameter = 190, ringHeight = 40, ringPosition
-            = - 50, legAngle = tableSurfaceJointAngle, legLength = 150);
+            = - 50, legAngle = tableSurfaceJointAngle, legLength = 150, includeLegs = true);
             union() {
                 difference() {
                     // Cut this off to fit on the print bed
