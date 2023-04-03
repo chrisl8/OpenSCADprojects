@@ -143,8 +143,7 @@ module tableUpperT_Joint(joint_location_in_degrees) {
             joint(jointLegs, jointInsideDiameter); // [0, 0, 180 + joint_location_in_degrees]
 }
 
-module tableCornerJoint(joint_location_in_degrees)
-{
+module tableCornerJoint(joint_location_in_degrees) {
     translate_x = tableRadius * cos(joint_location_in_degrees);
     translate_y = tableRadius * sin(joint_location_in_degrees);
 
@@ -166,7 +165,6 @@ module tableCornerJoint(joint_location_in_degrees)
         rotate([0, 0, 180 + joint_location_in_degrees]) joint(jointLegs, jointInsideDiameter, true, true);
 
     if (RenderPipes) {
-
         // Table Bottom
         color(PipeColor)
             translate([translate_x, translate_y, 0])
