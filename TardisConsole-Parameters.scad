@@ -9,7 +9,8 @@ tableLegInsideJointDiameter = horizontalPipeInsideDiameter_0_50pvc;
 
 RenderPipes = true;
 
-tableRadius = tableDiameter / 2;
+tableRadiusForPanels = tableDiameter / 2;
+tableRadius = tableRadiusForPanels + 14;
 tableHeight = 750; // Does not affect printed parts.
 tableTopCenterRise = 218;
 
