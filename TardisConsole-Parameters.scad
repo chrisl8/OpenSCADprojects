@@ -35,10 +35,10 @@ tableUpperSurfacePipeLength = tableUpperSurfaceLength - 71;
 echo("Upper Surface Pipe Length (mm):", tableUpperSurfacePipeLength);
 
 // It helps to just comment out the corner joint to see how these meet.
-tableLowerRadiusPipeStartingPoint = 77; // Eyball this until it doesn't cut into the surface pipe.
+tableLowerRadiusPipeStartingPoint = 78; // Eyball this until it doesn't cut into the surface pipe.
 // Eyeball this until it doesn't cut into the center ring in the TimeRotorBase
 // This is easiest to see by going into WalkerRotaryFoot-Lower-ShaftHolder and commenting out the legsAroundTheCenterPoint
-tableLowerRadiusPipeLength = tableRadius - 110;
+tableLowerRadiusPipeLength = tableRadius - 109;
 echo("Table Bottom Pipe Length (mm):", tableLowerRadiusPipeLength);
 
 // It helps to just comment out the corner joint to see how these meet.
