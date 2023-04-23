@@ -223,8 +223,8 @@ module panel(joint_location_in_degrees) {
     translate_x_1 = tableRadiusForPanels * cos(joint_location_in_degrees * 2) - xOffset;
     translate_y = tableRadiusForPanels * sin(joint_location_in_degrees) + yOffset;
     difference() {
-        translate([0, 1, 234.1]) // Eyeball this
-            rotate([tableSurfaceJointAngle - 92.38, 0, 0])
+        translate([0, 1, 233.1]) // Eyeball this
+            rotate([tableSurfaceJointAngle - 92.33, 0, 0])
                 // and this to make the panels sit right on the extended corner pipe.
                 linear_extrude(height = panelThickness, center = false, convexity = 0, twist = 0)
                     polygon(points = [[0, 0], [translate_x_1, translate_y], [translate_x, translate_y]],
